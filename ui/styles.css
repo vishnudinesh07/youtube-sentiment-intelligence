@@ -1,0 +1,374 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;800&family=Great+Vibes&display=swap');
+
+html{
+    scroll-behavior:smooth;
+}
+
+html, body, [class*="css"]{
+    font-family:'Inter',sans-serif;
+}
+
+*{
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+}
+
+/* ---------- HIDE STREAMLIT TOP BAR ---------- */
+header[data-testid="stHeader"]{
+    display:none !important;
+}
+
+div[data-testid="stToolbar"]{
+    display:none !important;
+}
+
+div[data-testid="stDecoration"]{
+    display:none !important;
+}
+
+#MainMenu{
+    visibility:hidden !important;
+}
+
+footer{
+    visibility:hidden !important;
+}
+
+/* ---------- APP ---------- */
+.stApp{
+    background:linear-gradient(135deg,#030303 0%,#0f172a 55%,#1e293b 100%);
+    color:white;
+}
+
+.block-container{
+    max-width:1450px;
+    padding-top:4rem;
+    padding-bottom:2rem;
+}
+
+/* ---------- TOP TICKER ---------- */
+.ticker-wrap{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    z-index:999999;
+    background:rgba(255,255,255,.04);
+    border-bottom:1px solid rgba(255,255,255,.08);
+    backdrop-filter: blur(8px);
+    overflow:hidden;
+    height:34px;
+}
+
+.ticker{
+    white-space:nowrap;
+    display:inline-block;
+    padding-left:100%;
+    animation:tickerMove 28s linear infinite;
+    line-height:34px;
+    color:#cbd5e1;
+    font-size:13px;
+    font-weight:600;
+    letter-spacing:.2px;
+}
+
+@keyframes tickerMove{
+    0% { transform:translateX(0); }
+    100% { transform:translateX(-100%); }
+}
+
+/* ---------- TITLE ---------- */
+.brand-wrap{
+    text-align:center;
+}
+
+.youtube-pill{
+    display:inline-block;
+    background:#ff0000;
+    color:white;
+    padding:8px 18px;
+    border-radius:14px;
+    font-weight:800;
+    font-size:1.55rem;
+    margin-right:10px;
+    box-shadow:0 10px 22px rgba(255,0,0,.22);
+}
+
+.brand-title{
+    display:inline-block;
+    font-family:'Great Vibes',cursive;
+    font-size:2.45rem;
+    color:white;
+    vertical-align:middle;
+    padding-top:8px;
+}
+
+.subtitle{
+    text-align:center;
+    color:#94a3b8;
+    margin-top:10px;
+    margin-bottom:2rem;
+    font-size:1rem;
+}
+
+/* ---------- INPUT ---------- */
+.stTextInput > div > div{
+    background:linear-gradient(
+        135deg,
+        rgba(255,255,255,.10),
+        rgba(255,255,255,.04)
+    ) !important;
+    border:1px solid rgba(255,255,255,.12) !important;
+    border-radius:10px !important;
+    box-shadow:
+        0 10px 24px rgba(0,0,0,.18),
+        inset 0 1px 0 rgba(255,255,255,.08);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition:all .18s ease;
+}
+
+.stTextInput > div > div:focus-within{
+    border:1px solid rgba(255,255,255,.22) !important;
+    box-shadow:
+        0 10px 28px rgba(59,130,246,.16),
+        inset 0 1px 0 rgba(255,255,255,.10);
+}
+
+.stTextInput input{
+    background:transparent !important;
+    color:white !important;
+    border:none !important;
+    outline:none !important;
+    border-radius:10px !important;
+    padding:14px 16px !important;
+    font-size:15px !important;
+}
+
+.stTextInput input::placeholder{
+    color:#94a3b8 !important;
+}
+
+div.stButton > button{
+    width:100%;
+    height:46px;
+    border-radius:14px;
+    border:1px solid rgba(255,255,255,.14);
+    background:rgba(255,255,255,.08);
+    color:white;
+    font-weight:700;
+    box-shadow:0 8px 20px rgba(0,0,0,.20);
+    transition:all .15s ease;
+}
+
+div.stButton > button:hover{
+    background:rgba(255,255,255,.14);
+    transform:translateY(-1px);
+}
+
+/* ---------- CARDS ---------- */
+.card,.hero{
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:22px;
+    box-shadow:0 10px 26px rgba(0,0,0,.22);
+    transform:translate3d(0,0,0);
+    contain:paint;
+}
+
+.card{
+    padding:22px;
+}
+
+.hero{
+    padding:28px;
+    text-align:center;
+    margin-bottom:1.5rem;
+}
+
+.small-label{
+    color:#94a3b8;
+    font-size:.92rem;
+}
+
+.big-value{
+    font-size:1.9rem;
+    font-weight:800;
+}
+
+.progress-title{
+    color:#cbd5e1;
+    margin-top:10px;
+    margin-bottom:5px;
+}
+
+/* ---------- ACCORDION ---------- */
+div[data-testid="stExpander"]{
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:22px;
+    background:rgba(255,255,255,.045);
+    box-shadow:0 10px 24px rgba(0,0,0,.22);
+    overflow:hidden;
+    margin-top:1.2rem;
+    margin-bottom:1rem;
+    backdrop-filter:none !important;
+    -webkit-backdrop-filter:none !important;
+    transform:translate3d(0,0,0);
+    contain:paint;
+    will-change:transform;
+}
+
+div[data-testid="stExpander"] details summary{
+    font-size:1.18rem;
+    font-weight:800;
+    color:white;
+    padding:0.8rem 0.6rem;
+    letter-spacing:-0.2px;
+}
+
+div[data-testid="stExpander"] details summary:hover{
+    color:#dbeafe;
+}
+
+/* ---------- DATAFRAME ---------- */
+[data-testid="stDataFrame"]{
+    border-radius:18px;
+    overflow:hidden;
+    border:1px solid rgba(255,255,255,.08);
+    box-shadow:0 10px 24px rgba(0,0,0,.22);
+    transform:translate3d(0,0,0);
+    contain:paint;
+}
+
+/* --------------------------------------------------- */
+/* RESPONSIVE MOBILE + TABLET OPTIMISATION */
+/* --------------------------------------------------- */
+@media (max-width: 1024px){
+
+    .block-container{
+        max-width:100%;
+        padding-left:1rem;
+        padding-right:1rem;
+    }
+
+    .brand-title{
+        font-size:2rem;
+    }
+
+    .youtube-pill{
+        font-size:1.2rem;
+        padding:7px 14px;
+    }
+
+    .hero{
+        padding:22px;
+    }
+
+    .big-value{
+        font-size:1.55rem;
+    }
+
+    [data-testid="stDataFrame"]{
+        font-size:13px;
+    }
+}
+
+@media (max-width: 768px){
+
+    .block-container{
+        padding-top:3.2rem;
+        padding-left:0.8rem;
+        padding-right:0.8rem;
+        padding-bottom:1.2rem;
+    }
+
+    .ticker-wrap{
+        height:28px;
+    }
+
+    .ticker{
+        line-height:28px;
+        font-size:11px;
+    }
+
+    .brand-wrap{
+        margin-top:0.2rem;
+    }
+
+    .youtube-pill{
+        display:block;
+        width:max-content;
+        margin:0 auto 8px auto;
+        font-size:1rem;
+        padding:6px 12px;
+    }
+
+    .brand-title{
+        display:block;
+        font-size:1.65rem;
+        padding-top:0;
+        line-height:1.1;
+    }
+
+    .subtitle{
+        font-size:0.82rem;
+        margin-top:8px;
+        margin-bottom:1.3rem;
+        padding:0 10px;
+    }
+
+    .hero{
+        padding:18px;
+        border-radius:18px;
+    }
+
+    .small-label{
+        font-size:0.82rem;
+    }
+
+    .big-value{
+        font-size:1.35rem;
+    }
+
+    div.stButton > button{
+        height:44px;
+        font-size:14px;
+    }
+
+    .stTextInput input{
+        font-size:14px !important;
+        padding:12px 14px !important;
+    }
+
+    div[data-testid="stExpander"] details summary{
+        font-size:1rem;
+        padding:0.75rem 0.55rem;
+    }
+
+    [data-testid="stDataFrame"]{
+        font-size:12px;
+    }
+}
+
+@media (max-width: 480px){
+
+    .brand-title{
+        font-size:1.45rem;
+    }
+
+    .youtube-pill{
+        font-size:0.92rem;
+    }
+
+    .subtitle{
+        font-size:0.76rem;
+    }
+
+    .hero{
+        padding:16px;
+    }
+
+    .big-value{
+        font-size:1.2rem;
+    }
+}

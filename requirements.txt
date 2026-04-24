@@ -1,0 +1,14 @@
+fastapi==0.136.1
+uvicorn==0.46.0
+streamlit==1.56.0
+requests==2.33.1
+pandas==3.0.2
+plotly==6.7.0
+python-dotenv==1.2.2
+google-api-python-client==2.194.0
+langdetect==1.0.9
+vaderSentiment==3.3.2
+transformers==4.38.2
+torch==2.2.2
+sentencepiece==0.2.1
+safetensors==0.7.0
