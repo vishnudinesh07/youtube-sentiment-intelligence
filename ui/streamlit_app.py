@@ -68,7 +68,7 @@ if run:
     try:
         with st.spinner("Analysing live audience sentiment..."):
             response = requests.post(
-                "http://127.0.0.1:8000/analyse",
+                "https://youtube-sentiment-intelligence.onrender.com/analyse",
                 json={"url": url, "limit": limit},
                 timeout=60
             )
