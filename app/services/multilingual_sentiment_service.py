@@ -1,41 +1,17 @@
 import logging
-from functools import lru_cache
+import os
+import requests
 
 from langdetect import detect, LangDetectException
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
-from transformers import pipeline
 
-# ---------------------------------------------------
-# LOGGING
-# ---------------------------------------------------
 logger = logging.getLogger(__name__)
 
-# ---------------------------------------------------
-# LIGHTWEIGHT MODELS
-# ---------------------------------------------------
 vader = SentimentIntensityAnalyzer()
 
+HF_TOKEN = os.getenv("HF_TOKEN")
 
-# ---------------------------------------------------
-# LOAD TRANSFORMER ONCE
-# ---------------------------------------------------
-@lru_cache(maxsize=1)
-def get_multilingual_model():
-    try:
-        logger.info("Loading multilingual sentiment model...")
-
-        model = pipeline(
-            "sentiment-analysis",
-            model="cardiffnlp/twitter-xlm-roberta-base-sentiment",
-            tokenizer="cardiffnlp/twitter-xlm-roberta-base-sentiment"
-        )
-
-        logger.info("Multilingual model loaded successfully")
-        return model
-
-    except Exception:
-        logger.exception("Failed to load multilingual model")
-        return None
+HF_MODEL_URL = "https://api-inference.huggingface.co/models/cardiffnlp/twitter-xlm-roberta-base-sentiment"
 
 
 # ---------------------------------------------------
@@ -88,16 +64,31 @@ def vader_sentiment(text: str) -> dict:
 
 
 # ---------------------------------------------------
-# TRANSFORMER SENTIMENT
+# HF API SENTIMENT
 # ---------------------------------------------------
 def transformer_sentiment(text: str) -> dict:
     try:
-        model = get_multilingual_model()
+        headers = {
+            "Authorization": f"Bearer {HF_TOKEN}"
+        }
 
-        if model is None:
-            raise ValueError("Transformer model unavailable")
+        payload = {
+            "inputs": text[:512]
+        }
 
-        result = model(text[:512])[0]
+        response = requests.post(
+            HF_MODEL_URL,
+            headers=headers,
+            json=payload,
+            timeout=30
+        )
+
+        data = response.json()
+
+        if not isinstance(data, list):
+            raise ValueError("Unexpected HF response")
+
+        result = data[0][0]
 
         label_map = {
             "LABEL_0": "negative",
@@ -113,11 +104,11 @@ def transformer_sentiment(text: str) -> dict:
         return {
             "sentiment": label,
             "confidence_score": round(float(result["score"]), 4),
-            "model_used": "xlm-roberta",
+            "model_used": "hf_api",
         }
 
     except Exception:
-        logger.exception("Transformer sentiment failed")
+        logger.exception("HF sentiment failed")
 
         return {
             "sentiment": "neutral",
@@ -148,7 +139,6 @@ def analyse_multilingual_sentiment(text: str) -> dict:
         else:
             result = transformer_sentiment(text)
 
-        # if transformer fallback returned neutral zero confidence
         if (
             result["confidence_score"] == 0.0
             and result["model_used"] == "transformer_fallback"
@@ -178,20 +168,9 @@ def summarise_sentiments(comments: list[dict]) -> dict:
     try:
         total = len(comments)
 
-        positive = sum(
-            1 for c in comments
-            if c.get("sentiment") == "positive"
-        )
-
-        neutral = sum(
-            1 for c in comments
-            if c.get("sentiment") == "neutral"
-        )
-
-        negative = sum(
-            1 for c in comments
-            if c.get("sentiment") == "negative"
-        )
+        positive = sum(1 for c in comments if c.get("sentiment") == "positive")
+        neutral = sum(1 for c in comments if c.get("sentiment") == "neutral")
+        negative = sum(1 for c in comments if c.get("sentiment") == "negative")
 
         if total == 0:
             return {
